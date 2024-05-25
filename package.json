@@ -1,0 +1,53 @@
+{
+  "name": "process-matcher",
+  "displayName": "Process Matcher",
+  "description": "Filters running processes by name, and gets processId of matched one.",
+  "version": "0.0.3",
+  "publisher": "abdelmaged",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abdelmaged/vscode-process-matcher"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "license": "MIT",
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "process-matcher.match",
+        "title": "Process Matcher: Match"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test",
+    "pkg": "./node_modules/@vscode/vsce/vsce package"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^7.7.1",
+    "@typescript-eslint/parser": "^7.7.1",
+    "@vscode/test-cli": "^0.0.9",
+    "@vscode/test-electron": "^2.3.10",
+    "eslint": "^8.57.0",
+    "typescript": "^5.4.5",
+    "@vscode/vsce": "^2.26.1",
+    "vscode-test": "^1.6.1"
+  },
+  "dependencies": {
+    "ps-node": "^0.1.6"
+  }
+}
