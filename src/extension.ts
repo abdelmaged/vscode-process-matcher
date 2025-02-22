@@ -36,7 +36,8 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     if (pss.length === 1) {
-      vscode.window.showInformationMessage(`Matched process with pid '${pss[0].pid}'. Command: '${pss[0].command} ${pss[0].arguments.join(' ')}'`);
+      const args = pss[0].arguments ? pss[0].arguments.join(' ') : '';
+      vscode.window.showInformationMessage(`Matched process with pid '${pss[0].pid}'. Command: '${pss[0].command} ${args}'`);
       return pss[0].pid;
     }
 
