@@ -2,7 +2,7 @@
   "name": "process-matcher",
   "displayName": "Process Matcher",
   "description": "Filters running processes by name, and gets processId of matched one.",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "abdelmaged",
   "repository": {
     "type": "git",
