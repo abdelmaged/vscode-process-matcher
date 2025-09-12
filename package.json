@@ -29,7 +29,7 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint",
+    "pretest": "npm run compile && npm run lint && cmake -B out/test-build -S src/test && cmake --build out/test-build",
     "lint": "eslint src --ext ts",
     "test": "vscode-test",
     "pkg": "./node_modules/@vscode/vsce/vsce package"
