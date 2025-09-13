@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-const find = require('find-process');
+import find from 'find-process';
 
 interface MatchOptions {
   program: string;
@@ -20,15 +20,15 @@ async function getProcessInfo(options: MatchOptions): Promise<ProcessInfo[]> {
     
     // Filter by args if provided
     if (options.args && options.args.length > 0) {
-      filteredProcesses = processes.filter((proc: any) => {
+      filteredProcesses = processes.filter((proc) => {
         const cmd = proc.cmd || '';
         return options.args.every(arg => cmd.includes(arg));
       });
     }
     
     // Convert to ProcessInfo format
-    return filteredProcesses.map((proc: any) => ({
-      pid: String(proc.pid),
+    return filteredProcesses.map((proc) => ({
+      pid: proc.pid,
       command: proc.name,
       arguments: proc.cmd ? proc.cmd.split(' ').slice(1) : []
     }));
@@ -49,7 +49,7 @@ export function activate(context: vscode.ExtensionContext) {
     if (pss.length === 1) {
       const args = pss[0].arguments ? pss[0].arguments.join(' ') : '';
       vscode.window.showInformationMessage(`Matched process with pid '${pss[0].pid}'. Command: '${pss[0].command} ${args}'`);
-      return pss[0].pid;
+      return pss[0].pid.toString();
     }
 
     const quickPickItems: vscode.QuickPickItem[] = pss.map((ps) => {
