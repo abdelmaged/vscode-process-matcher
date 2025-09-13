@@ -1,8 +1,8 @@
 {
   "name": "process-matcher",
   "displayName": "Process Matcher",
-  "description": "Filters running processes by name, and gets processId of matched one.",
-  "version": "0.0.4",
+  "description": "Filters running processes by name or arguments, and gets processId of matched one.",
+  "version": "0.0.5",
   "publisher": "abdelmaged",
   "repository": {
     "type": "git",
@@ -44,8 +44,7 @@
     "@vscode/test-electron": "^2.3.10",
     "eslint": "^8.57.0",
     "typescript": "^5.4.5",
-    "@vscode/vsce": "^2.26.1",
-    "vscode-test": "^1.6.1"
+    "@vscode/vsce": "^2.26.1"
   },
   "dependencies": {
     "find-process": "^1.4.7"
