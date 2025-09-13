@@ -30,7 +30,10 @@ jobs:
         
     - name: Install dependencies (Common)
       run: npm install
-    
+
+    - name: Print Runner OS
+      run: echo "Runner OS is ${{ runner.os }}"
+
     - name: Install dependencies (Linux)
       if: runner.os == 'Linux'
       run: |
