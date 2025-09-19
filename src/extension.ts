@@ -19,7 +19,8 @@ async function getProcessInfo(options: MatchOptions): Promise<ProcessInfo[]> {
 
     // Filter by name
     processes = processes.filter((proc) => {
-      return proc.name.match(options.program) || proc.cmd.startsWith(options.program);
+      return proc.name.match(options.program) || proc.cmd.startsWith(options.program) ||
+        (process.platform === "win32" && proc.cmd.startsWith(options.program.replace(/\\\\/g, '\\')));
     });
     // console.log(`After Name Filter: '${options.program}', ` + JSON.stringify(processes, null, 2) + "\n");
 

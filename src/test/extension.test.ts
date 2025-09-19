@@ -78,6 +78,10 @@ suite('Extension Test Suite', () => {
     } finally {
       process.kill(pid2);
       process.kill(pid1);
+      // Wait a bit for processes to fully terminate on Windows
+      if (process.platform === "win32") {
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
       fs.unlinkSync(app1);
       fs.unlinkSync(app2);
       fs.rmdirSync(common_dir);
@@ -162,7 +166,11 @@ suite('Extension Test Suite', () => {
   test('FindByFullPath', async () => {
     const pid = runProcess(exe_path, ['-arg1']);
     try {
-      await matchCmd(pid, exe_path);
+      if (process.platform === "win32") {
+        await matchCmd(pid, exe_path.replace(/\\/g, '\\\\'));
+      } else {
+        await matchCmd(pid, exe_path);
+      }
     } finally {
       process.kill(pid);
     }
