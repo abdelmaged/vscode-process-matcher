@@ -14,20 +14,25 @@ interface ProcessInfo {
 
 async function getProcessInfo(options: MatchOptions): Promise<ProcessInfo[]> {
   try {
-    const processes = await find('name', options.program);
-    
-    let filteredProcesses = processes;
-    
+    let processes = await find('name', options.program);
+    // console.log(`Initial Match: '${options.program}', ` + JSON.stringify(processes, null, 2) + "\n");
+
+    // Filter by name
+    processes = processes.filter((proc) => {
+      return proc.name.match(options.program) || proc.cmd.startsWith(options.program);
+    });
+    // console.log(`After Name Filter: '${options.program}', ` + JSON.stringify(processes, null, 2) + "\n");
+
     // Filter by args if provided
     if (options.args && options.args.length > 0) {
-      filteredProcesses = processes.filter((proc) => {
-        const cmd = proc.cmd || '';
-        return options.args.every(arg => cmd.includes(arg));
+      processes = processes.filter((proc) => {
+        return options.args.every(arg => proc.cmd.match(arg));
       });
     }
-    
+    // console.log(`After Args Filter: '${options.args}', ` + JSON.stringify(processes, null, 2) + "\n");
+
     // Convert to ProcessInfo format
-    return filteredProcesses.map((proc) => ({
+    return processes.map((proc) => ({
       pid: proc.pid,
       command: proc.name,
       arguments: proc.cmd ? proc.cmd.split(' ').slice(1) : []
