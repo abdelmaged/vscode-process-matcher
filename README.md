@@ -4,7 +4,7 @@ process-matcher filters running processes by name, and get processId to be used 
 ## Features
 Filters processes by:
 * Program name
-* Arugments to program
+* Arguments to program
 
 ## Extension Settings
 The extension creates command `process-matcher.match`, that takes the following options:
