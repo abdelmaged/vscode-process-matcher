@@ -22,7 +22,7 @@ suite('Extension Test Suite', () => {
     return proc.pid;
   }
 
-  async function matchCmd(pid: number, program: string, args: string[] = []) {
+  async function matchCmd(pid: number, program: string, args: string[] | string = []) {
     const results = await vscode.commands.executeCommand('process-matcher.match', { program: program, args: args });
     assert.strictEqual(results, pid ? pid.toString() : null);
   }
@@ -102,6 +102,17 @@ suite('Extension Test Suite', () => {
     const pid2 = runProcess(exe_path, ['--config']);
     try {
       await matchCmd(pid2, 'myapp', ['--conf']);
+    } finally {
+      process.kill(pid1);
+      process.kill(pid2);
+    }
+  });
+
+  test('FindByStringArg', async () => {
+    const pid1 = runProcess(exe_path);
+    const pid2 = runProcess(exe_path, ['--config']);
+    try {
+      await matchCmd(pid2, 'myapp', '--conf');
     } finally {
       process.kill(pid1);
       process.kill(pid2);
