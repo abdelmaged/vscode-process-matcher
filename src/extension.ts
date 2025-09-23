@@ -3,7 +3,7 @@ import find from 'find-process';
 
 interface MatchOptions {
   program: string;
-  args: string[];
+  args: string[] | string;
 }
 
 interface ProcessInfo {
@@ -23,15 +23,23 @@ async function getProcessInfo(options: MatchOptions): Promise<ProcessInfo[]> {
         (process.platform === "win32" && proc.cmd.startsWith(options.program.replace(/\\\\/g, '\\')));
     });
     // console.log(`After Name Filter: '${options.program}', ` + JSON.stringify(processes, null, 2) + "\n");
-
+   
+    let args_list: string[] = [];
+    if (typeof options.args === 'string') {
+      let args = options.args;
+      args_list = args.split(/\s+/);
+    } else {
+      args_list = options.args;
+    }
+    
     // Filter by args if provided
-    if (options.args && options.args.length > 0) {
+    if (args_list.length > 0) {
       processes = processes.filter((proc) => {
-        return options.args.every(arg => proc.cmd.match(arg));
+        return args_list.every(arg => proc.cmd.match(arg));
       });
     }
     // console.log(`After Args Filter: '${options.args}', ` + JSON.stringify(processes, null, 2) + "\n");
-
+   
     // Convert to ProcessInfo format
     return processes.map((proc) => ({
       pid: proc.pid,
