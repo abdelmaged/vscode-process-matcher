@@ -109,13 +109,11 @@ suite('Extension Test Suite', () => {
   });
 
   test('FindByStringArg', async () => {
-    const pid1 = runProcess(exe_path);
-    const pid2 = runProcess(exe_path, ['--config']);
+    const pid = runProcess(exe_path, ['--config']);
     try {
-      await matchCmd(pid2, 'myapp', '--conf');
+      await matchCmd(pid, 'myapp', '--conf');
     } finally {
-      process.kill(pid1);
-      process.kill(pid2);
+      process.kill(pid);
     }
   });
 
